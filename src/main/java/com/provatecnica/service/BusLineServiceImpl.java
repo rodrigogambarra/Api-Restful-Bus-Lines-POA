@@ -23,9 +23,7 @@ public class BusLineServiceImpl implements BusLineService {
 		return busLineRepository.findByName(name);
 	}
 
-	public void saveBusLine(BusLine busLine) {
-		busLineRepository.save(busLine);
-	}
+	public BusLine saveBusLine(BusLine busLine) { return busLineRepository.save(busLine); }
 
 	public void updateBusLine(BusLine busLine) { saveBusLine(busLine);	}
 

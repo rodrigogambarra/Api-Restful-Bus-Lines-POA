@@ -10,12 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -72,5 +71,23 @@ public class RestApiController {
 			busLine.setBusRoutes(null);
 		}
 		return new ResponseEntity<List<BusLine>>(busLines, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "Create or update a BusLine")
+	@RequestMapping(value = "/busLine", method = RequestMethod.POST)
+	public ResponseEntity<?> postBusLine(@Valid @RequestBody BusLine newBusLine) {
+
+		BusLine busLine = busLineService.saveBusLine(newBusLine);
+		if (busLine == null) {
+			logger.info("Creating BusLine with name {}", newBusLine.getName());
+			busLineService.saveBusLine(newBusLine);
+		}
+		else {
+			logger.info("Updating BusLine with name {}", newBusLine.getName());
+			busLineService.updateBusLine(newBusLine);
+		}
+		busLine.add(linkTo(methodOn(RestApiController.class).getBusLine(busLine.getIdBusLine())).withSelfRel());
+
+		return new ResponseEntity<BusLine>(busLine, HttpStatus.CREATED);
 	}
 }

@@ -10,7 +10,7 @@ public interface BusLineService {
 
 	BusLine findByName(String name);
 
-	void saveBusLine(BusLine linha);
+	BusLine saveBusLine(BusLine linha);
 
 	void updateBusLine(BusLine linha);
 
