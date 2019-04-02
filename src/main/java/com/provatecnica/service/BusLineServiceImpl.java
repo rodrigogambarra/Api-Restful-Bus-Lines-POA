@@ -45,8 +45,12 @@ public class BusLineServiceImpl implements BusLineService {
 		return busLineRepository.findAll(spec);
 	}
 
-	public boolean isBusLineExist(BusLine busLine) {
-		return findByName(busLine.getName()) != null;
+	public List<BusLine> filterBusLineByRadius(Double lat, Double lon, Double km) {
+
+		return null;
 	}
+
+
+	public boolean isBusLineExist(BusLine busLine) { return findByName(busLine.getName()) != null; }
 
 }

@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface BusRouteRepository extends JpaRepository<BusRoute, Long> {
 
 	BusRoute findOne(Long id);
+
 }
