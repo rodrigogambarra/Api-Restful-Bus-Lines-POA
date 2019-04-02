@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -71,6 +70,19 @@ public class RestApiController {
 			busLine.setBusRoutes(null);
 		}
 		return new ResponseEntity<List<BusLine>>(busLines, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "Delete a BusLine")
+	@RequestMapping(value = "/busLine", method = RequestMethod.DELETE)
+	public ResponseEntity<?> deleteBusLine(@Valid @RequestBody BusLine busLine){
+		logger.info("Searching BusLine with idBusLine {}", busLine.getIdBusLine());
+		BusLine busLine1 = busLineService.findById(busLine.getIdBusLine());
+		if(busLine1 == null){
+			logger.error("BusLine with idBusLine {} not found.", busLine.getIdBusLine());
+			return new ResponseEntity(new CustomErrorType("BusLine with idBusLine " + busLine.getIdBusLine() + " not found"), HttpStatus.NOT_FOUND);
+		}
+		busLineService.deleteBusLineById(busLine.getIdBusLine());
+		return new ResponseEntity<BusLine>(busLine, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Create or update a BusLine")
