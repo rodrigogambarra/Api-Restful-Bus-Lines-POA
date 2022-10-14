@@ -7,19 +7,19 @@ import java.util.List;
 
 public interface BusLineService {
 
-	BusLine findById(Long id);
+	BusLineDTO findById(Long id);
 
 	BusLine findByName(String name);
 
-	BusLineDTO saveBusLine(BusLine linha);
+	BusLineDTO saveBusLine(BusLineDTO busLineDTO);
 
-	BusLineDTO updateBusLine(BusLine linha);
+	BusLineDTO updateBusLine(BusLineDTO busLineDTO);
 
 	void deleteBusLineById(Long id);
 
 	void deleteAllBusLines();
 
-	List<BusLine> findAllBusLines();
+	List<BusLineDTO> findAllBusLines();
 
 	List<BusLine> filterBusLine(String name);
 

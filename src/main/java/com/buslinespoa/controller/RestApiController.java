@@ -5,6 +5,7 @@ import com.buslinespoa.model.BusLine;
 import com.buslinespoa.service.BusLineService;
 import com.buslinespoa.service.BusRouteService;
 import com.buslinespoa.util.CustomErrorType;
+import com.buslinespoa.util.CustomSucessType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -35,30 +36,29 @@ public class RestApiController {
 
 	@ApiOperation(value = "Return All BusLines")
 	@RequestMapping(value = "/busLine/", method = RequestMethod.GET)
-	public ResponseEntity<List<BusLine>> listAllBusLines() {
-		List<BusLine> busLines = busLineService.findAllBusLines();
-		if (busLines.isEmpty()) {
+	public ResponseEntity<List<BusLineDTO>> listAllBusLines() {
+		List<BusLineDTO> busLinesDTO = busLineService.findAllBusLines();
+		if (busLinesDTO.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-		for (BusLine busLine : busLines) {
-			Long idBusLine = busLine.getIdBusLine();
-			busLine.add(linkTo(methodOn(RestApiController.class).getBusLine(idBusLine)).withSelfRel());
-			busLine.setBusRoutes(null);
-		}
-		return new ResponseEntity<List<BusLine>>(busLines, HttpStatus.OK);
+		/*for (BusLineDTO busLineDTO : busLinesDTO) {
+			Long idBusLine = busLineDTO.getIdBusLine();
+			busLineDTO.add(linkTo(methodOn(RestApiController.class).getBusLine(idBusLine)).withSelfRel());
+		}*/
+		return new ResponseEntity<>(busLinesDTO, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Fetch a BusLine with idBusLine")
 	@RequestMapping(value = "/busLine/{idBusLine}", method = RequestMethod.GET)
 	public ResponseEntity<?> getBusLine(@PathVariable("idBusLine") long idBusLine) {
 		logger.info("Fetching BusLine with idBusLine {}", idBusLine);
-		BusLine busLine = busLineService.findById(idBusLine);
-		if (busLine == null) {
+		BusLineDTO busLineDTO = busLineService.findById(idBusLine);
+		if (busLineDTO == null) {
 			logger.error("BusLine with idBusLine {} not found.", idBusLine);
 			return new ResponseEntity(new CustomErrorType("BusLine with idBusLine " + idBusLine + " not found"), HttpStatus.NOT_FOUND);
 		}
-		busLine.add(linkTo(methodOn(RestApiController.class).listAllBusLines()).withRel("BusLine list"));
-		return new ResponseEntity<BusLine>(busLine, HttpStatus.OK);
+		//busLineDTO.add(linkTo(methodOn(RestApiController.class).listAllBusLines()).withRel("BusLine list"));
+		return new ResponseEntity<BusLineDTO>(busLineDTO, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Fetch a BusLine with name")
@@ -79,27 +79,31 @@ public class RestApiController {
 
 	@ApiOperation(value = "Delete a BusLine")
 	@RequestMapping(value = "/busLine", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteBusLine(@Valid @RequestBody BusLine busLine){
+	public ResponseEntity<?> deleteBusLine(@Valid @RequestBody BusLineDTO busLine){
+
+		if(busLine.getIdBusLine() == null){
+			return new ResponseEntity(new CustomErrorType("idBusLine uninformed"), HttpStatus.BAD_REQUEST);
+		}
 		logger.info("Searching BusLine with idBusLine {}", busLine.getIdBusLine());
-		BusLine busLine1 = busLineService.findById(busLine.getIdBusLine());
-		if(busLine1 == null){
+		BusLineDTO busLineDTO = busLineService.findById(busLine.getIdBusLine());
+		if(busLineDTO == null){
 			logger.error("BusLine with idBusLine {} not found.", busLine.getIdBusLine());
 			return new ResponseEntity(new CustomErrorType("BusLine with idBusLine " + busLine.getIdBusLine() + " not found"), HttpStatus.NOT_FOUND);
 		}
+		logger.info("BusLine with idBusLine {} deleted.", busLine.getIdBusLine());
 		busLineService.deleteBusLineById(busLine.getIdBusLine());
-		return new ResponseEntity<BusLine>(busLine, HttpStatus.OK);
+		return new ResponseEntity(new CustomSucessType("BusLine with idBusLine "+ busLine.getIdBusLine() + " deleted"), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Create or update a BusLine")
 	@RequestMapping(value = "/busLine", method = RequestMethod.POST)
-	public ResponseEntity<?> postBusLine(@Valid @RequestBody BusLine newBusLine) {
+	public ResponseEntity<?> postBusLine(@Valid @RequestBody BusLineDTO newBusLine) {
 
-		BusLine busLine = null;
-		BusLineDTO busLineDTO = new BusLineDTO();
+		BusLineDTO busLineDTO = null;
 		if(newBusLine.getIdBusLine() != null) {
-			busLine = busLineService.findById(newBusLine.getIdBusLine());
+			busLineDTO = busLineService.findById(newBusLine.getIdBusLine());
 		}
-		if (busLine == null) {
+		if (busLineDTO == null) {
 			logger.info("Creating BusLine with name {}", newBusLine.getName());
 		}else {
 			logger.info("Updating BusLine with name {}", newBusLine.getName());

@@ -7,6 +7,7 @@ import com.buslinespoa.model.BusRoute;
 import com.buslinespoa.repository.BusLineRepository;
 import com.buslinespoa.repository.BusLineSpecification;
 import com.buslinespoa.repository.SearchCriteria;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,36 +23,43 @@ public class BusLineServiceImpl implements BusLineService {
 	@Autowired
 	private BusRouteService busRouteService;
 
-	public BusLine findById(Long id) {
-		return busLineRepository.findOne(id);
+	@Autowired
+	private ModelMapper mapper;
+
+	public BusLineDTO findById(Long id) {
+		BusLine busLine = busLineRepository.findOne(id);
+		BusLineDTO busLineDTO = null;
+		if(busLine != null)
+			busLineDTO = mapper.map(busLine,BusLineDTO.class);
+
+		return busLineDTO;
 	}
 
 	public BusLine findByName(String name) {
 		return busLineRepository.findByName(name);
 	}
 
-	public BusLineDTO saveBusLine(BusLine newBusLine) {
+	public BusLineDTO saveBusLine(BusLineDTO busLineDTO) {
 
-		List<BusRoute> busRoutes = newBusLine.getBusRoutes();
-		newBusLine.setBusRoutes(null);
-		BusLine busLine = busLineRepository.saveAndFlush(newBusLine);
-		List<BusRouteResponseDTO> busRoutesDTO = new ArrayList<>();
+		BusLine busLine = mapper.map(busLineDTO, BusLine.class);
+		List<BusRoute> busRoutes = busLine.getBusRoutes();
+		BusLine newBusLine = busLineRepository.saveAndFlush(busLine);
+		busRouteService.deleteBusRouteByBusLine(newBusLine);//Limpa todos itinerários
 		if(busRoutes != null) {
-			busRouteService.deleteBusRouteByBusLine(busLine);//Limpa todos itinerários
 			for (BusRoute busRoute : busRoutes) {
 				busRoute.setIdBusRoute(null);//Sempre irá criar itinerário novo
-				busRoute.setBusLine(busLine);
+				busRoute.setBusLine(newBusLine);
 				busRouteService.saveBusRoute(busRoute); //Adiciona novo ou novos itinerários
 			}
+			newBusLine.setBusRoutes(busRoutes);
 		}
-		busRoutesDTO = busRouteService.findAllBusRoutesByBusLine(busLine);
-		BusLineDTO busLineDTO =new BusLineDTO(busLine.getIdBusLine(), busLine.getCode(),busLine.getName(),busRoutesDTO);
+		busLineDTO = mapper.map(newBusLine, BusLineDTO.class);
 
 		return busLineDTO;
 	}
 
-	public BusLineDTO updateBusLine(BusLine newBusLine) {
-		return saveBusLine(newBusLine);
+	public BusLineDTO updateBusLine(BusLineDTO newBusLineDTO) {
+		return saveBusLine(newBusLineDTO);
 	}
 
 	public void deleteBusLineById(Long id) {
@@ -62,8 +70,14 @@ public class BusLineServiceImpl implements BusLineService {
 		busLineRepository.deleteAll();
 	}
 
-	public List<BusLine> findAllBusLines() {
-		return busLineRepository.findAll();
+	public List<BusLineDTO> findAllBusLines() {
+		List<BusLine> busLines = busLineRepository.findAll();
+		List<BusLineDTO> busLineDTOS = new ArrayList<>();
+		for (BusLine busLine: busLines) {
+			BusLineDTO busLineDTO = mapper.map(busLine, BusLineDTO.class);
+			busLineDTOS.add(busLineDTO);
+		}
+		return busLineDTOS;
 	}
 
 	public List<BusLine> filterBusLine(String name) {
@@ -76,7 +90,6 @@ public class BusLineServiceImpl implements BusLineService {
 
 		return null;
 	}
-
 
 	public boolean isBusLineExist(BusLine busLine) { return findByName(busLine.getName()) != null; }
 
