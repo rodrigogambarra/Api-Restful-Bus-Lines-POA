@@ -28,4 +28,10 @@ public class BusLineDTO {
 		this.name = busLine.getName();
 		this.busRoutes = new ArrayList<>();
 	}
+	public BusLineDTO(Long id, String code, String name){
+		this.idBusLine = id;
+		this.code = code;
+		this.name = name;
+		this.busRoutes = new ArrayList<>();
+	}
 }

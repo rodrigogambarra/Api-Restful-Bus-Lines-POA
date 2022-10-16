@@ -1,5 +1,10 @@
 package com.buslinespoa.configuration;
 
+import com.buslinespoa.dto.request.BusLineDTO;
+import com.buslinespoa.dto.request.BusRouteDTO;
+import com.buslinespoa.dto.response.BusRouteResponseDTO;
+import com.buslinespoa.service.BusLineService;
+import com.buslinespoa.service.BusRouteService;
 import com.google.gson.*;
 import com.buslinespoa.model.BusLine;
 import com.buslinespoa.model.BusRoute;
@@ -9,6 +14,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -21,21 +27,21 @@ import java.util.List;
 @Component
 public class DataLoader implements ApplicationRunner {
 
-	private BusLineRepository busLineRepository;
-	private BusRouteRepository busRouteRepository;
+	@Autowired
+	private BusRouteService busRouteService;
 
 	@Autowired
-	public DataLoader(BusLineRepository busLineRepository, BusRouteRepository busRouteRepository) {
-		this.busLineRepository = busLineRepository;
-		this.busRouteRepository = busRouteRepository;
-	}
+	private BusLineService busLineService;
+
+	@Autowired
+	private ModelMapper mapper;
 
 	public void run(ApplicationArguments args) throws Exception {
 
 		File file = new File("/tmp/onibus/");
-		if (!file.exists()) {
+		if (file.exists()) {
 			file.mkdir();
-			saveBusLineToDisk();
+			//saveBusLineToDisk();
 			loadBusLineFromFile();
 		}
 	}
@@ -101,9 +107,6 @@ public class DataLoader implements ApplicationRunner {
 						//System.out.println(obj.get("lat").toString().replace("\"", "") + " - " + obj.get("lng").toString().replace("\"", ""));
 					}
 					busLine.setBusRoutes(busRoutes);
-					for (BusRoute itiner: busLine.getBusRoutes()) {
-						System.out.println(busLine.getIdBusLine() + " - " + busLine.getCode() + " - " + busLine.getName() + " - " + itiner.getLatitude() + " - " + itiner.getLongitude());
-					}
 					busLines.add(busLine);
 				}
 				//Aguarda 1 segundo
@@ -111,12 +114,10 @@ public class DataLoader implements ApplicationRunner {
 			}
 		}
 	}
-
-	private void loadBusLineFromFile() throws Exception {
-
+	private void loadBusLineFromFile () throws Exception {
 		Gson g = new Gson();
-		List<BusLine> busLines = new ArrayList<>();
-		List<BusRoute> busRoutes = null;
+		List<BusLineDTO> busLines = new ArrayList<>();
+		List<BusRouteResponseDTO> busRoutes = null;
 		JsonParser jsonParser = new JsonParser();
 		JsonObject jsonObject, obj;
 		JsonArray jsonArray;
@@ -129,42 +130,37 @@ public class DataLoader implements ApplicationRunner {
 			reader.close();
 			source.close();
 			System.out.println("CARREGANDO DADOS ...");
-			for (JsonElement lin: jsonArray) {
+			for (JsonElement lin : jsonArray) {
 				jsonObject = lin.getAsJsonObject();
-				BusLine busLine = new BusLine(
+				BusLineDTO busLine = new BusLineDTO(
 					Long.parseLong(jsonObject.get("id").toString().replace("\"", "")),
 					jsonObject.get("codigo").toString().replace("\"", ""),
 					jsonObject.get("nome").toString().replace("\"", ""));
 
-				this.busLineRepository.saveAndFlush(busLine);
-
-				//System.out.println(busLine.getId() + " - " + busLine.getCodigo() + " - " + busLine.getNome());
+				//System.out.println(busLine.getIdBusLine() + " - " + busLine.getCode()+ " - " + busLine.getName());
 				source = new FileInputStream("/tmp/onibus/busLine-" + busLine.getIdBusLine() + ".json");
 
-				if (source != null) {
-					reader = new InputStreamReader(source);
-					jsonObject = (JsonObject) jsonParser.parse(reader);
-					reader.close();
-					source.close();
+				reader = new InputStreamReader(source);
+				jsonObject = (JsonObject) jsonParser.parse(reader);
+				reader.close();
+				source.close();
 
-					busRoutes = new ArrayList<>();
-					BusRoute busRoute = null;
-					for (int j = 0; true; j++) {
-						obj = (JsonObject) jsonObject.get(Integer.toString(j));
-						if (obj == null) break;
-						busRoute = new BusRoute(busLine,
-							Double.valueOf(obj.get("lat").toString().replace("\"", "")),
-							Double.valueOf(obj.get("lng").toString().replace("\"", ""))
-						);
-						busRoutes.add(busRoute);
-						busLine.setBusRoutes(busRoutes);
+				busRoutes = new ArrayList<>();
+				BusRouteResponseDTO busRoute = null;
+				for (int j = 0; true; j++) {
+					obj = (JsonObject) jsonObject.get(Integer.toString(j));
+					if (obj == null) break;
+					busRoute = new BusRouteResponseDTO(null,
+						Double.valueOf(obj.get("lat").toString().replace("\"", "")),
+						Double.valueOf(obj.get("lng").toString().replace("\"", ""))
+					);
+					busRoutes.add(busRoute);
+					busLine.setBusRoutes(busRoutes);
 
-						this.busRouteRepository.saveAndFlush(busRoute);
-						//System.out.println(obj.get("lat").toString().replace("\"", "") + " - " + obj.get("lng").toString().replace("\"", ""));
-					}
-					busLines.add(busLine);
-
+					//System.out.println(obj.get("lat").toString().replace("\"", "") + " - " + obj.get("lng").toString().replace("\"", ""));
 				}
+				busLines.add(busLine);
+				this.busLineService.saveBusLine(busLine);
 			}
 			System.out.println("DADOS CARREGADOS");
 		}

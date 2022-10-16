@@ -100,22 +100,18 @@ Exemplo:
 
 6. RequestMethod <i>DELETE</i> Url: http://localhost:8080/api/busLine/{id}" - <b>Exclui uma linha de ônibus e seus itinerários</b>
 
-7. RequestMethod <i>GET</i> Url: http://localhost:8080/api/filterBusLineByRadius/" - <b>Retorna todas linhas de ônibus e seus itinerários próximos a uma latitude e longitude dentro de um raio em KM também passado por json, conforme exemplo:</b>
+7. RequestMethod <i>GET</i> Url: http://localhost:8089/api/filterBusLineByRadius/?km={Valor Km}&latitude={Valor Latitute}&longitude={Valor Longitude}" - <b>Retorna todas linhas de ônibus e seus itinerários próximos a uma latitude e longitude dentro de um raio em KM passado por parâmetro url</b>
+
+8. RequestMethod <i>POST</i> Url: http://localhost:8080/api/filterBusLineByRadius/" - <b>Retorna todas linhas de ônibus e seus itinerários próximos a uma latitude e longitude dentro de um raio em KM, passados por json, conforme exemplo:</b>
 
 Exemplo:
 {
 
+    "latitude":"-30.129305",
+    "longitude":"-51.201491",
+    "km":1
 
 }
-
-8. RequestMethod <i>GET</i> Url: http://localhost:8080/api/filterBusLineByRadius/" - <b>Retorna todas linhas de ônibus e seus itinerários próximos a uma latitude e longitude dentro de um raio em KM, passados por json, conforme exemplo:</b>
-
-Exemplo:
-{
-
-
-}
-
 
 ## Pré requisitos
 Para abrir o sistema, basta o uso de um navegador de sua preferência e conexão com internet.

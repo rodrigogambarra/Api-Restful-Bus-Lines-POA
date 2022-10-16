@@ -2,6 +2,7 @@ package com.buslinespoa.service;
 
 import com.buslinespoa.dto.request.BusLineDTO;
 import com.buslinespoa.model.BusLine;
+import com.buslinespoa.model.Spot;
 
 import java.util.List;
 
@@ -22,6 +23,10 @@ public interface BusLineService {
 	List<BusLineDTO> findAllBusLines();
 
 	List<BusLine> filterBusLine(String name);
+
+	List<BusLineDTO> filterBusLineByRadius(Double lat, Double lon, Double km);
+
+	List<BusLineDTO> filterBusLineRadius(Spot spot);
 
 	boolean isBusLineExist(BusLine linha);
 }

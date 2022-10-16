@@ -4,6 +4,7 @@ import com.buslinespoa.dto.request.BusLineDTO;
 import com.buslinespoa.dto.response.BusRouteResponseDTO;
 import com.buslinespoa.model.BusLine;
 import com.buslinespoa.model.BusRoute;
+import com.buslinespoa.model.Spot;
 import com.buslinespoa.repository.BusLineRepository;
 import com.buslinespoa.repository.BusLineSpecification;
 import com.buslinespoa.repository.SearchCriteria;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("busLineService")
 public class BusLineServiceImpl implements BusLineService {
@@ -43,6 +45,7 @@ public class BusLineServiceImpl implements BusLineService {
 
 		BusLine busLine = mapper.map(busLineDTO, BusLine.class);
 		List<BusRoute> busRoutes = busLine.getBusRoutes();
+		//busLine.setBusRoutes(null);
 		BusLine newBusLine = busLineRepository.saveAndFlush(busLine);
 		busRouteService.deleteBusRouteByBusLine(newBusLine);//Limpa todos itinerários
 		if(busRoutes != null) {
@@ -86,9 +89,18 @@ public class BusLineServiceImpl implements BusLineService {
 		return busLineRepository.findAll(spec);
 	}
 
-	public List<BusLine> filterBusLineByRadius(Double lat, Double lon, Double km) {
+	public List<BusLineDTO> filterBusLineByRadius(Double lat, Double lon, Double km) {
+		List<BusLine> buslines = busLineRepository.filterBusLineRadius(lat, lon, km);
 
-		return null;
+		return buslines.stream().map(objetos -> mapper.map(objetos, BusLineDTO.class))
+			.collect(Collectors.toList());
+	}
+
+	public List<BusLineDTO> filterBusLineRadius(Spot spot) {
+		Double lat = spot.getLatitude();
+		Double lon = spot.getLongitude();
+		Double km = spot.getKm();
+		return filterBusLineByRadius(lat, lon, km);
 	}
 
 	public boolean isBusLineExist(BusLine busLine) { return findByName(busLine.getName()) != null; }

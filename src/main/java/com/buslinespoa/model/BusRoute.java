@@ -62,4 +62,13 @@ public class BusRoute extends ResourceSupport{
 		this.busLine = busLine;
 	}
 
+	@Override
+	public String toString() {
+		return "BusRoute{" +
+			"idBusRoute=" + idBusRoute +
+			", busLine=" + busLine +
+			", latitude=" + latitude +
+			", longitude=" + longitude +
+			'}';
+	}
 }

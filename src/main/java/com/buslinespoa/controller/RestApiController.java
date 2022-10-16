@@ -1,7 +1,10 @@
 package com.buslinespoa.controller;
 
 import com.buslinespoa.dto.request.BusLineDTO;
+import com.buslinespoa.dto.response.BusRouteResponseDTO;
 import com.buslinespoa.model.BusLine;
+import com.buslinespoa.model.BusRoute;
+import com.buslinespoa.model.Spot;
 import com.buslinespoa.service.BusLineService;
 import com.buslinespoa.service.BusRouteService;
 import com.buslinespoa.util.CustomErrorType;
@@ -77,22 +80,42 @@ public class RestApiController {
 		return new ResponseEntity<List<BusLine>>(busLines, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Delete a BusLine")
-	@RequestMapping(value = "/busLine", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteBusLine(@Valid @RequestBody BusLineDTO busLine){
+	@ApiOperation(value = "Update a BusLine with idBusLine")
+	@RequestMapping(value = "/busLine/{idBusLine}", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateBusLine(@PathVariable("idBusLine") long idBusLine, @Valid @RequestBody BusLineDTO busLine) {
+		logger.info("Updating BusLine with idBusLine {}", idBusLine);
+		BusLineDTO currentBusLine = busLineService.findById(idBusLine);
+		if (currentBusLine == null) {
+			logger.error("Unable to update. BusLine with idBusLine {} not found.", idBusLine);
+			return new ResponseEntity(
+				new CustomErrorType("Unable to upate. BusLine with idBusLine " + idBusLine + " not found."), HttpStatus.NOT_FOUND);
+		}
 
-		if(busLine.getIdBusLine() == null){
-			return new ResponseEntity(new CustomErrorType("idBusLine uninformed"), HttpStatus.BAD_REQUEST);
-		}
-		logger.info("Searching BusLine with idBusLine {}", busLine.getIdBusLine());
-		BusLineDTO busLineDTO = busLineService.findById(busLine.getIdBusLine());
+		currentBusLine.setName(busLine.getName());
+		currentBusLine.setCode(busLine.getCode());
+		currentBusLine.setBusRoutes(busLine.getBusRoutes());
+
+		busLineService.updateBusLine(currentBusLine);
+		//for (BusRouteResponseDTO busRoute : currentBusLine.getBusRoutes()) {
+		//	busRouteService.updateBusRoute(busRoute);
+		//}
+		//currentBusLine.add(linkTo(methodOn(RestApiController.class).listAllBusLines()).withRel("BusLine list"));
+		return new ResponseEntity<BusLineDTO>(currentBusLine, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "Delete a BusLine")
+	@RequestMapping(value = "/busLine/{idBusLine}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> deleteBusLine(@PathVariable("idBusLine") long idBusLine){
+
+		logger.info("Searching BusLine with idBusLine {}", idBusLine);
+		BusLineDTO busLineDTO = busLineService.findById(idBusLine);
 		if(busLineDTO == null){
-			logger.error("BusLine with idBusLine {} not found.", busLine.getIdBusLine());
-			return new ResponseEntity(new CustomErrorType("BusLine with idBusLine " + busLine.getIdBusLine() + " not found"), HttpStatus.NOT_FOUND);
+			logger.error("BusLine with idBusLine {} not found.", idBusLine);
+			return new ResponseEntity(new CustomErrorType("BusLine with idBusLine " + idBusLine + " not found"), HttpStatus.NOT_FOUND);
 		}
-		logger.info("BusLine with idBusLine {} deleted.", busLine.getIdBusLine());
-		busLineService.deleteBusLineById(busLine.getIdBusLine());
-		return new ResponseEntity(new CustomSucessType("BusLine with idBusLine "+ busLine.getIdBusLine() + " deleted"), HttpStatus.OK);
+		logger.info("BusLine with idBusLine {} deleted.", idBusLine);
+		busLineService.deleteBusLineById(idBusLine);
+		return new ResponseEntity(new CustomSucessType("BusLine with idBusLine "+ idBusLine + " deleted"), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Create or update a BusLine")
@@ -111,5 +134,37 @@ public class RestApiController {
 		busLineDTO = busLineService.updateBusLine(newBusLine);
 		//busLineDTO.add(linkTo(methodOn(RestApiController.class).getBusLine(busLineDTO.getId())).withSelfRel());
 		return new ResponseEntity<BusLineDTO>(busLineDTO, HttpStatus.CREATED);
+	}
+
+	@ApiOperation(value = "Fetch a BusLine list in km radius using attributes")
+	@RequestMapping(value = "/filterBusLineByRadius/", method = RequestMethod.GET)
+	public ResponseEntity<?> getBusLineFilterByRadius(@RequestParam Double latitude,@RequestParam Double longitude, @RequestParam Double km) {
+		logger.info("Fetching BusLine with");
+		List<BusLineDTO> busLines = busLineService.filterBusLineByRadius(latitude, longitude, km);
+		if (busLines.isEmpty()) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		for (BusLineDTO busLine : busLines) {
+			Long idBusLine = busLine.getIdBusLine();
+			//busLine.add(linkTo(methodOn(RestApiController.class).getBusLine(idBusLine)).withSelfRel());
+			busLine.setBusRoutes(null);
+		}
+		return new ResponseEntity<>(busLines, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "Fetch a BusLine list in km radius using param spot")
+	@RequestMapping(value = "/FilterBusLineByRadius/", method = RequestMethod.POST)
+	public ResponseEntity<?> BusLineFilterByRadius(@Valid @RequestBody Spot spot) {
+		logger.info("Fetching BusLine with");
+		List<BusLineDTO> busLines = busLineService.filterBusLineRadius(spot);
+		if (busLines.isEmpty()) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		for (BusLineDTO busLine : busLines) {
+			Long idBusLine = busLine.getIdBusLine();
+			//busLine.add(linkTo(methodOn(RestApiController.class).getBusLine(idBusLine)).withSelfRel());
+			busLine.setBusRoutes(null);
+		}
+		return new ResponseEntity<List<BusLineDTO>>(busLines, HttpStatus.OK);
 	}
 }

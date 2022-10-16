@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Data
-@AllArgsConstructor
+//@AllArgsConstructor
 public class BusRouteResponseDTO {
 	private Long id;
 	@NotNull
@@ -20,5 +20,10 @@ public class BusRouteResponseDTO {
 		this.id = busRoute.getIdBusRoute();
 		this.latitude = busRoute.getLatitude();
 		this.longitude = busRoute.getLongitude();
+	}
+	public BusRouteResponseDTO(Long id, Double latitude, Double longitude){
+		this.id = id;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 }
