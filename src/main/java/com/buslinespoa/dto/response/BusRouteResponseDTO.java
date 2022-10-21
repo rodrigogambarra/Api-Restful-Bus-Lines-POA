@@ -1,14 +1,10 @@
 package com.buslinespoa.dto.response;
 
 import com.buslinespoa.model.BusRoute;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.hibernate.validator.constraints.NotEmpty;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Data
-//@AllArgsConstructor
 public class BusRouteResponseDTO {
 	private Long id;
 	@NotNull

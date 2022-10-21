@@ -1,9 +1,7 @@
 package com.buslinespoa.controller;
 
 import com.buslinespoa.dto.request.BusLineDTO;
-import com.buslinespoa.dto.response.BusRouteResponseDTO;
 import com.buslinespoa.model.BusLine;
-import com.buslinespoa.model.BusRoute;
 import com.buslinespoa.model.Spot;
 import com.buslinespoa.service.BusLineService;
 import com.buslinespoa.service.BusRouteService;
@@ -33,9 +31,6 @@ public class RestApiController {
 
 	@Autowired
 	BusLineService busLineService;
-
-	@Autowired
-	BusRouteService busRouteService;
 
 	@ApiOperation(value = "Return All BusLines")
 	@RequestMapping(value = "/busLine/", method = RequestMethod.GET)

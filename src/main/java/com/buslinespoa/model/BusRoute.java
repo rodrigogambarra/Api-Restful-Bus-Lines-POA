@@ -1,11 +1,12 @@
 package com.buslinespoa.model;
 
+import lombok.Data;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 
+@Data
 @Entity
-@Table(name = "BUSROUTE")
 public class BusRoute extends ResourceSupport{
 
 	@Id
@@ -30,45 +31,4 @@ public class BusRoute extends ResourceSupport{
     }
 
     public BusRoute() {}
-
-    public Long getIdBusRoute() {
-        return idBusRoute;
-    }
-
-    public void setIdBusRoute(Long idBusRoute) {
-        this.idBusRoute = idBusRoute;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-	public BusLine getBusLine() {
-		return busLine;
-	}
-	public void setBusLine(BusLine busLine) {
-		this.busLine = busLine;
-	}
-
-	@Override
-	public String toString() {
-		return "BusRoute{" +
-			"idBusRoute=" + idBusRoute +
-			", busLine=" + busLine +
-			", latitude=" + latitude +
-			", longitude=" + longitude +
-			'}';
-	}
 }

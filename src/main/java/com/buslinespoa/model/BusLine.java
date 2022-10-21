@@ -1,13 +1,14 @@
 package com.buslinespoa.model;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Data
 @Entity
-@Table(name = "BUSLINE")
 public class BusLine extends ResourceSupport {
 
     @Id
@@ -33,46 +34,4 @@ public class BusLine extends ResourceSupport {
     }
 
 	public BusLine(){}
-
-    public Long getIdBusLine() {
-        return idBusLine;
-    }
-
-    public void setIdBusLine(Long idBusLine) {
-        this.idBusLine = idBusLine;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<BusRoute> getBusRoutes() {
-        return busRoutes;
-    }
-
-    public void setBusRoutes(List<BusRoute> busRoutes) {
-        this.busRoutes = busRoutes;
-    }
-
-	@Override
-	public String toString() {
-		return "BusLine{" +
-			"idBusLine=" + idBusLine +
-			", code='" + code + '\'' +
-			", name='" + name + '\'' +
-			", busRoutes=" + busRoutes +
-			'}';
-	}
 }
