@@ -36,14 +36,12 @@ public class DataLoader implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 
 		//loadBusLineToDataBase();
-
-
 		File file = new File("/tmp/onibus/");
 		if (!file.exists()) {
 			file.mkdir();
 			saveBusLineToDisk();
+			loadBusLineFromFile();
 		}else loadBusLineFromFile();
-
 	}
 
 	private void loadBusLineToDataBase() throws Exception {

@@ -1,7 +1,6 @@
 package com.buslinespoa.service;
 
 import com.buslinespoa.dto.request.BusLineDTO;
-import com.buslinespoa.dto.response.BusRouteResponseDTO;
 import com.buslinespoa.model.BusLine;
 import com.buslinespoa.model.BusRoute;
 import com.buslinespoa.model.Spot;
@@ -33,7 +32,6 @@ public class BusLineServiceImpl implements BusLineService {
 		BusLineDTO busLineDTO = null;
 		if(busLine != null)
 			busLineDTO = mapper.map(busLine,BusLineDTO.class);
-
 		return busLineDTO;
 	}
 
@@ -42,10 +40,8 @@ public class BusLineServiceImpl implements BusLineService {
 	}
 
 	public BusLineDTO saveBusLine(BusLineDTO busLineDTO) {
-
 		BusLine busLine = mapper.map(busLineDTO, BusLine.class);
 		List<BusRoute> busRoutes = busLine.getBusRoutes();
-		//busLine.setBusRoutes(null);
 		BusLine newBusLine = busLineRepository.saveAndFlush(busLine);
 		busRouteService.deleteBusRouteByBusLine(newBusLine);//Limpa todos itinerários
 		if(busRoutes != null) {
@@ -57,7 +53,6 @@ public class BusLineServiceImpl implements BusLineService {
 			newBusLine.setBusRoutes(busRoutes);
 		}
 		busLineDTO = mapper.map(newBusLine, BusLineDTO.class);
-
 		return busLineDTO;
 	}
 

@@ -4,7 +4,6 @@ import com.buslinespoa.dto.request.BusLineDTO;
 import com.buslinespoa.model.BusLine;
 import com.buslinespoa.model.Spot;
 import com.buslinespoa.service.BusLineService;
-import com.buslinespoa.service.BusRouteService;
 import com.buslinespoa.util.CustomErrorType;
 import com.buslinespoa.util.CustomSucessType;
 import io.swagger.annotations.Api;
@@ -39,10 +38,6 @@ public class RestApiController {
 		if (busLinesDTO.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-		/*for (BusLineDTO busLineDTO : busLinesDTO) {
-			Long idBusLine = busLineDTO.getIdBusLine();
-			busLineDTO.add(linkTo(methodOn(RestApiController.class).getBusLine(idBusLine)).withSelfRel());
-		}*/
 		return new ResponseEntity<>(busLinesDTO, HttpStatus.OK);
 	}
 
@@ -55,7 +50,6 @@ public class RestApiController {
 			logger.error("BusLine with idBusLine {} not found.", idBusLine);
 			return new ResponseEntity(new CustomErrorType("BusLine with idBusLine " + idBusLine + " not found"), HttpStatus.NOT_FOUND);
 		}
-		//busLineDTO.add(linkTo(methodOn(RestApiController.class).listAllBusLines()).withRel("BusLine list"));
 		return new ResponseEntity<BusLineDTO>(busLineDTO, HttpStatus.OK);
 	}
 
@@ -66,11 +60,6 @@ public class RestApiController {
 		List<BusLine> busLines = busLineService.filterBusLine(name);
 		if (busLines.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
-		for (BusLine busLine : busLines) {
-			Long idBusLine = busLine.getIdBusLine();
-			busLine.add(linkTo(methodOn(RestApiController.class).getBusLine(idBusLine)).withSelfRel());
-			busLine.setBusRoutes(null);
 		}
 		return new ResponseEntity<List<BusLine>>(busLines, HttpStatus.OK);
 	}
@@ -85,23 +74,16 @@ public class RestApiController {
 			return new ResponseEntity(
 				new CustomErrorType("Unable to upate. BusLine with idBusLine " + idBusLine + " not found."), HttpStatus.NOT_FOUND);
 		}
-
 		currentBusLine.setName(busLine.getName());
 		currentBusLine.setCode(busLine.getCode());
 		currentBusLine.setBusRoutes(busLine.getBusRoutes());
-
 		busLineService.updateBusLine(currentBusLine);
-		//for (BusRouteResponseDTO busRoute : currentBusLine.getBusRoutes()) {
-		//	busRouteService.updateBusRoute(busRoute);
-		//}
-		//currentBusLine.add(linkTo(methodOn(RestApiController.class).listAllBusLines()).withRel("BusLine list"));
 		return new ResponseEntity<BusLineDTO>(currentBusLine, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Delete a BusLine")
 	@RequestMapping(value = "/busLine/{idBusLine}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteBusLine(@PathVariable("idBusLine") long idBusLine){
-
 		logger.info("Searching BusLine with idBusLine {}", idBusLine);
 		BusLineDTO busLineDTO = busLineService.findById(idBusLine);
 		if(busLineDTO == null){
@@ -116,7 +98,6 @@ public class RestApiController {
 	@ApiOperation(value = "Create or update a BusLine")
 	@RequestMapping(value = "/busLine", method = RequestMethod.POST)
 	public ResponseEntity<?> postBusLine(@Valid @RequestBody BusLineDTO newBusLine) {
-
 		BusLineDTO busLineDTO = null;
 		if(newBusLine.getIdBusLine() != null) {
 			busLineDTO = busLineService.findById(newBusLine.getIdBusLine());
@@ -127,7 +108,6 @@ public class RestApiController {
 			logger.info("Updating BusLine with name {}", newBusLine.getName());
 		}
 		busLineDTO = busLineService.updateBusLine(newBusLine);
-		//busLineDTO.add(linkTo(methodOn(RestApiController.class).getBusLine(busLineDTO.getId())).withSelfRel());
 		return new ResponseEntity<BusLineDTO>(busLineDTO, HttpStatus.CREATED);
 	}
 
@@ -141,7 +121,6 @@ public class RestApiController {
 		}
 		for (BusLineDTO busLine : busLines) {
 			Long idBusLine = busLine.getIdBusLine();
-			//busLine.add(linkTo(methodOn(RestApiController.class).getBusLine(idBusLine)).withSelfRel());
 			busLine.setBusRoutes(null);
 		}
 		return new ResponseEntity<>(busLines, HttpStatus.OK);
@@ -157,7 +136,6 @@ public class RestApiController {
 		}
 		for (BusLineDTO busLine : busLines) {
 			Long idBusLine = busLine.getIdBusLine();
-			//busLine.add(linkTo(methodOn(RestApiController.class).getBusLine(idBusLine)).withSelfRel());
 			busLine.setBusRoutes(null);
 		}
 		return new ResponseEntity<List<BusLineDTO>>(busLines, HttpStatus.OK);

@@ -1,4 +1,4 @@
-package com.buslinespoa.business;
+package com.buslinespoa.model.business;
 
 import com.buslinespoa.controller.RestApiController;
 import com.buslinespoa.model.BusLine;

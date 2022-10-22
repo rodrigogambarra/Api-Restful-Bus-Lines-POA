@@ -1,10 +1,12 @@
 package com.buslinespoa.dto.response;
 
 import com.buslinespoa.model.BusRoute;
+import lombok.Builder;
 import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
+@Builder
 public class BusRouteResponseDTO {
 	private Long id;
 	@NotNull

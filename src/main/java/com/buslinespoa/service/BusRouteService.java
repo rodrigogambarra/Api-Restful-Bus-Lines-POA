@@ -45,7 +45,6 @@ public class BusRouteService {
 				for(BusRoute busRoute : busRoutes)
 					busRouteRepository.delete(busRoute.getIdBusRoute());
 			}
-			//busRouteRepository.deleteBusRouteByBusLine(busLine.getIdBusLine());
 		}
 		catch (Exception ex){
 			System.out.println(ex.getMessage());

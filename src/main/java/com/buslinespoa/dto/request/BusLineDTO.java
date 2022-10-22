@@ -3,6 +3,7 @@ package com.buslinespoa.dto.request;
 import com.buslinespoa.dto.response.BusRouteResponseDTO;
 import com.buslinespoa.model.BusLine;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -10,6 +11,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 @Data
+@Builder
 @AllArgsConstructor
 public class BusLineDTO {
 
@@ -21,6 +23,7 @@ public class BusLineDTO {
 	@Valid
 	private List<BusRouteResponseDTO> busRoutes;
 
+	public BusLineDTO(){}
 	public BusLineDTO(BusLine busLine){
 		this.idBusLine = busLine.getIdBusLine();
 		this.code = busLine.getCode();

@@ -1,15 +1,18 @@
 package com.buslinespoa.model;
 
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Data
+@Builder
 @Entity
-public class BusLine extends ResourceSupport {
+public class BusLine{
 
     @Id
     @Column(name="ID_BUSLINE", nullable=false)
@@ -33,5 +36,26 @@ public class BusLine extends ResourceSupport {
         this.name = name;
     }
 
+	public BusLine(Long idBusLine, String code, String name, List<BusRoute> busRouteLis) {
+		this.idBusLine = idBusLine;
+		this.code = code;
+		this.name = name;
+		this.busRoutes = busRouteLis;
+	}
+
 	public BusLine(){}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+		BusLine busLine = (BusLine) o;
+		return Objects.equals(idBusLine, busLine.idBusLine) && Objects.equals(code, busLine.code) && Objects.equals(name, busLine.name) && Objects.equals(busRoutes, busLine.busRoutes);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), idBusLine, code, name, busRoutes);
+	}
 }
