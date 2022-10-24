@@ -77,7 +77,7 @@ public class DataLoader implements ApplicationRunner {
 					jsonObject.get("codigo").toString().replace("\"", ""),
 					jsonObject.get("nome").toString().replace("\"", ""));
 
-				url = "http://www.poatransporte.com.br/php/facades/process.php?a=il&p=" + busLine.getIdBusLine();
+				url = "http://www.poatransporte.com.br/php/facades/process.php?a=il&p=" + busLine.getId();
 				request = new HttpGet(url);
 				response = httpClient.execute(request);
 				if (response != null) {
@@ -204,7 +204,7 @@ public class DataLoader implements ApplicationRunner {
 					jsonObject.get("nome").toString().replace("\"", ""));
 
 				//System.out.println(busLine.getIdBusLine() + " - " + busLine.getCode()+ " - " + busLine.getName());
-				source = new FileInputStream("/tmp/onibus/busLine-" + busLine.getIdBusLine() + ".json");
+				source = new FileInputStream("/tmp/onibus/busLine-" + busLine.getId() + ".json");
 
 				reader = new InputStreamReader(source);
 				jsonObject = (JsonObject) jsonParser.parse(reader);

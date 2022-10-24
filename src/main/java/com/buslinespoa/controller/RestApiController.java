@@ -8,6 +8,7 @@ import com.buslinespoa.util.CustomErrorType;
 import com.buslinespoa.util.CustomSucessType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,12 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Api(value = "API REST Bus Lines Poa")
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class RestApiController {
 
 	public static final Logger logger = LoggerFactory.getLogger(RestApiController.class);
 
-	@Autowired
-	BusLineService busLineService;
+	private final BusLineService busLineService;
 
 	@ApiOperation(value = "Return All BusLines")
 	@RequestMapping(value = "/busLine/", method = RequestMethod.GET)
@@ -99,8 +100,8 @@ public class RestApiController {
 	@RequestMapping(value = "/busLine", method = RequestMethod.POST)
 	public ResponseEntity<?> postBusLine(@Valid @RequestBody BusLineDTO newBusLine) {
 		BusLineDTO busLineDTO = null;
-		if(newBusLine.getIdBusLine() != null) {
-			busLineDTO = busLineService.findById(newBusLine.getIdBusLine());
+		if(newBusLine.getId() != null) {
+			busLineDTO = busLineService.findById(newBusLine.getId());
 		}
 		if (busLineDTO == null) {
 			logger.info("Creating BusLine with name {}", newBusLine.getName());
@@ -120,7 +121,7 @@ public class RestApiController {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 		for (BusLineDTO busLine : busLines) {
-			Long idBusLine = busLine.getIdBusLine();
+			Long idBusLine = busLine.getId();
 			busLine.setBusRoutes(null);
 		}
 		return new ResponseEntity<>(busLines, HttpStatus.OK);
@@ -135,7 +136,7 @@ public class RestApiController {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 		for (BusLineDTO busLine : busLines) {
-			Long idBusLine = busLine.getIdBusLine();
+			Long idBusLine = busLine.getId();
 			busLine.setBusRoutes(null);
 		}
 		return new ResponseEntity<List<BusLineDTO>>(busLines, HttpStatus.OK);
