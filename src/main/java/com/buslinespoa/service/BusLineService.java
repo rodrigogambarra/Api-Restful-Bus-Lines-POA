@@ -10,7 +10,7 @@ public interface BusLineService {
 
 	BusLineDTO findById(Long id);
 
-	BusLine findByName(String name);
+	BusLineDTO findByName(String name);
 
 	BusLineDTO saveBusLine(BusLineDTO busLineDTO);
 
@@ -22,7 +22,7 @@ public interface BusLineService {
 
 	List<BusLineDTO> findAllBusLines();
 
-	List<BusLine> filterBusLine(String name);
+	List<BusLineDTO> filterBusLine(String name);
 
 	List<BusLineDTO> filterBusLineByRadius(Double lat, Double lon, Double km);
 

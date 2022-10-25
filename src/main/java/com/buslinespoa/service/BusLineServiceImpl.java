@@ -35,8 +35,9 @@ public class BusLineServiceImpl implements BusLineService {
 		return busLineDTO;
 	}
 
-	public BusLine findByName(String name) {
-		return busLineRepository.findByName(name);
+	public BusLineDTO findByName(String name) {
+		 BusLine busLine = busLineRepository.findByName(name);
+		return mapper.map(busLine, BusLineDTO.class);
 	}
 
 	public BusLineDTO saveBusLine(BusLineDTO busLineDTO) {
@@ -78,10 +79,12 @@ public class BusLineServiceImpl implements BusLineService {
 		return busLineDTOS;
 	}
 
-	public List<BusLine> filterBusLine(String name) {
+	public List<BusLineDTO> filterBusLine(String name) {
 		BusLineSpecification spec =
 			new BusLineSpecification(new SearchCriteria("name", ":", name));
-		return busLineRepository.findAll(spec);
+		List<BusLine> buslines = busLineRepository.findAll(spec);
+		return buslines.stream().map(objetos -> mapper.map(objetos, BusLineDTO.class))
+			.collect(Collectors.toList());
 	}
 
 	public List<BusLineDTO> filterBusLineByRadius(Double lat, Double lon, Double km) {
