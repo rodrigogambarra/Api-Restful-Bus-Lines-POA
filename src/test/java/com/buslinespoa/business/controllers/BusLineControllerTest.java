@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import java.util.Collections;
+import java.util.List;
 
 import static com.buslinespoa.business.utils.BusLineUtil.*;
 import static org.hamcrest.core.Is.is;
@@ -63,6 +64,57 @@ public class BusLineControllerTest {
 				.andExpect(jsonPath("$.id", is(1)))
 				.andExpect(jsonPath("$.code", is("Linha teste")))
 				.andExpect(jsonPath("$.name", is("Ônibus teste")));
+	}
+
+	@Test
+	void testWhenDELETEIsCalledThenABuslineNotFound() throws Exception {
+		Long expectedValidId = 1L;
+		mockMvc.perform(delete(BUSLINE_API_URL_PATH + "/busLine/" + expectedValidId)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
+	}
+
+	@Test
+	void testWhenDELETEIsCalledThenABuslineShouldBeDeleted() throws Exception {
+		Long expectedValidId = 1L;
+		BusLineDTO expectedBusLineDTO = createFakeDTOWithId();
+
+		when(busLineService.findById(expectedBusLineDTO.getId())).thenReturn(expectedBusLineDTO);
+
+		mockMvc.perform(delete(BUSLINE_API_URL_PATH + "/busLine/" + expectedValidId)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk());
+	}
+
+	@Test
+	void testWhenGETWithValidIsCalledThenBuslineShouldBeReturned() throws Exception {
+		Long expectedValidId = 1L;
+		BusLineDTO expectedBusLineDTO = createFakeDTOWithId();
+		when(busLineService.findById(expectedBusLineDTO.getId())).thenReturn(expectedBusLineDTO);
+		mockMvc.perform(get(BUSLINE_API_URL_PATH + "/busLine/" + expectedValidId)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk());
+	}
+
+	@Test
+	void testWhenGETWithInvalidIsCalledThenNotFound() throws Exception {
+		Long expectedInvalidId = 1L;
+			mockMvc.perform(get(BUSLINE_API_URL_PATH + "/busLine/" + expectedInvalidId)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isNotFound());
+	}
+
+	@Test
+	void testWhenGETIsCalledThenBuslineListShouldBeReturned() throws Exception {
+		BusLineDTO expectedBusLineDTO = createFakeDTOWithId();
+		List<BusLineDTO> expectedBusLineDTOList = Collections.singletonList(expectedBusLineDTO);
+		when(busLineService.findAllBusLines()).thenReturn(expectedBusLineDTOList);
+		mockMvc.perform(get(BUSLINE_API_URL_PATH + "/busLine/")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$[0].id", is(1)))
+				.andExpect(jsonPath("$[0].code", is("Linha teste")))
+				.andExpect(jsonPath("$[0].name", is("Ônibus teste")));
 	}
 
 }
