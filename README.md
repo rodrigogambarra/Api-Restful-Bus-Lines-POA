@@ -1,4 +1,4 @@
-<h1 align="center">Api Restful Bus Line POA</h1>
+<h1 align="center">Api Rest Bus Line POA</h1>
 <p align="center">Sistema que faz integração ou download de todas as informações contidas na api: http://www.datapoa.com.br/dataset/poatransporte, e cria uma nova Api Restfull disponibilizando diferentes funcionalidades.</p>
 
 ---
@@ -56,7 +56,7 @@ As principais funcionalidades do projeto são:
 
 2. RequestMethod <i>GET</i> Url: http://localhost:8089/api/busLine/{id}" - <b>Retorna uma linha de ônibus específica, conforme valor do "id", e todos seus itinerários</b>
 
-3. RequestMethod <i>GET</i> Url: http://localhost:8089/api/busLine/{nome}" - <b>Retorna uma ou mais linhas de ônibus, conforme "nome" passado por parâmetro</b>
+3. RequestMethod <i>GET</i> Url: http://localhost:8089/api/filterBusLine/{nome}" - <b>Retorna uma ou mais linhas de ônibus, conforme "nome" passado por parâmetro</b>
 
 4. RequestMethod <i>POST</i> Url: http://localhost:8089/api/busLine/" - <b>Cria uma nova linha de ônibus e seus itinerários, conforme exemplo json:</b>
 

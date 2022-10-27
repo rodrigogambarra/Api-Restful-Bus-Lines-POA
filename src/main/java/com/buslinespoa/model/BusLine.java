@@ -42,20 +42,6 @@ public class BusLine{
 		this.name = name;
 		this.busRoutes = busRouteLis;
 	}
-
 	public BusLine(){}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		if (!super.equals(o)) return false;
-		BusLine busLine = (BusLine) o;
-		return Objects.equals(idBusLine, busLine.idBusLine) && Objects.equals(code, busLine.code) && Objects.equals(name, busLine.name) && Objects.equals(busRoutes, busLine.busRoutes);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(super.hashCode(), idBusLine, code, name, busRoutes);
-	}
 }

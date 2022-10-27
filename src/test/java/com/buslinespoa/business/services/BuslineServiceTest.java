@@ -37,14 +37,14 @@ public class BuslineServiceTest {
 	void testGivenValidBusLineIdThenReturnThisBusLineDTO() {
 		BusLineDTO busLineDTO = createFakeDTO();
 		BusLine expectedSavedBusLine = createFakeEntity();
-		busLineDTO.setId(expectedSavedBusLine.getIdBusLine());
+		busLineDTO.setIdBusLine(expectedSavedBusLine.getIdBusLine());
 
 		when(mapper.map(expectedSavedBusLine, BusLineDTO.class)).thenReturn(busLineDTO);
 		when(busLineRepository.findOne(expectedSavedBusLine.getIdBusLine())).thenReturn(expectedSavedBusLine);
 
 		BusLineDTO expectedBuslineDTO = busLineService.findById(expectedSavedBusLine.getIdBusLine());
 
-		assertEquals(expectedSavedBusLine.getIdBusLine(), expectedBuslineDTO.getId());
+		assertEquals(expectedSavedBusLine.getIdBusLine(), expectedBuslineDTO.getIdBusLine());
 		assertEquals(expectedSavedBusLine.getName(), expectedBuslineDTO.getName());
 		assertEquals(expectedSavedBusLine.getCode(), expectedBuslineDTO.getCode());
 		assertEquals(expectedSavedBusLine.getBusRoutes().size(), expectedBuslineDTO.getBusRoutes().size());
@@ -54,7 +54,7 @@ public class BuslineServiceTest {
 	void testGivenBusLineDTOThenReturnBusLineDTO() {
 		BusLineDTO busLineDTO = createFakeDTO();
 		BusLine expectedSavedBusLine = createFakeEntity();
-		busLineDTO.setId(expectedSavedBusLine.getIdBusLine());
+		busLineDTO.setIdBusLine(expectedSavedBusLine.getIdBusLine());
 
 		when(mapper.map(busLineDTO, BusLine.class)).thenReturn(expectedSavedBusLine);
 		when(mapper.map(expectedSavedBusLine, BusLineDTO.class)).thenReturn(busLineDTO);
@@ -62,7 +62,7 @@ public class BuslineServiceTest {
 
 		BusLineDTO expectedBuslineDTO = busLineService.saveBusLine(busLineDTO);
 
-		assertEquals(expectedSavedBusLine.getIdBusLine(), expectedBuslineDTO.getId());
+		assertEquals(expectedSavedBusLine.getIdBusLine(), expectedBuslineDTO.getIdBusLine());
 		assertEquals(expectedSavedBusLine.getName(), expectedBuslineDTO.getName());
 		assertEquals(expectedSavedBusLine.getCode(), expectedBuslineDTO.getCode());
 		assertEquals(expectedSavedBusLine.getBusRoutes().size(), expectedBuslineDTO.getBusRoutes().size());

@@ -79,7 +79,7 @@ public class BusLineControllerTest {
 		Long expectedValidId = 1L;
 		BusLineDTO expectedBusLineDTO = createFakeDTOWithId();
 
-		when(busLineService.findById(expectedBusLineDTO.getId())).thenReturn(expectedBusLineDTO);
+		when(busLineService.findById(expectedBusLineDTO.getIdBusLine())).thenReturn(expectedBusLineDTO);
 
 		mockMvc.perform(delete(BUSLINE_API_URL_PATH + "/busLine/" + expectedValidId)
 				.contentType(MediaType.APPLICATION_JSON))
@@ -90,7 +90,7 @@ public class BusLineControllerTest {
 	void testWhenGETWithValidIsCalledThenBuslineShouldBeReturned() throws Exception {
 		Long expectedValidId = 1L;
 		BusLineDTO expectedBusLineDTO = createFakeDTOWithId();
-		when(busLineService.findById(expectedBusLineDTO.getId())).thenReturn(expectedBusLineDTO);
+		when(busLineService.findById(expectedBusLineDTO.getIdBusLine())).thenReturn(expectedBusLineDTO);
 		mockMvc.perform(get(BUSLINE_API_URL_PATH + "/busLine/" + expectedValidId)
 				.contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk());

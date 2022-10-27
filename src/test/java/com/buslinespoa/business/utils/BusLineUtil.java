@@ -16,7 +16,7 @@ public class BusLineUtil {
 
 	public static BusLineDTO createFakeDTOWithId() {
 		return BusLineDTO.builder()
-			.id(BUSLINE_ID)
+			.idBusLine(BUSLINE_ID)
 			.code(CODE)
 			.name(NAME)
 			.busRoutes(Collections.singletonList(BusRouteUtil.createFakeDTO()))

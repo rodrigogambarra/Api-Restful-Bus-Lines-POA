@@ -51,7 +51,7 @@ public class RestApiController {
 	}
 
 	@ApiOperation(value = "Fetch a BusLine with name")
-	@RequestMapping(value = "/FilterBusLine/{name}", method = RequestMethod.GET)
+	@RequestMapping(value = "/filterBusLine/{name}", method = RequestMethod.GET)
 	public ResponseEntity<?> getBusLineForName(@PathVariable("name") String name) {
 		logger.info("Fetching BusLine with name {}", name);
 		List<BusLineDTO> busLines = busLineService.filterBusLine(name);
@@ -96,8 +96,8 @@ public class RestApiController {
 	@RequestMapping(value = "/busLine", method = RequestMethod.POST)
 	public ResponseEntity<?> postBusLine(@Valid @RequestBody BusLineDTO newBusLine) {
 		BusLineDTO busLineDTO = null;
-		if(newBusLine.getId() != null) {
-			busLineDTO = busLineService.findById(newBusLine.getId());
+		if(newBusLine.getIdBusLine() != null) {
+			busLineDTO = busLineService.findById(newBusLine.getIdBusLine());
 		}
 		if (busLineDTO == null) {
 			logger.info("Creating BusLine with name {}", newBusLine.getName());
@@ -123,7 +123,7 @@ public class RestApiController {
 	}
 
 	@ApiOperation(value = "Fetch a BusLine list in km radius using param spot")
-	@RequestMapping(value = "/FilterBusLineByRadius/", method = RequestMethod.POST)
+	@RequestMapping(value = "/filterBusLineByRadius/", method = RequestMethod.POST)
 	public ResponseEntity<?> BusLineFilterByRadius(@Valid @RequestBody Spot spot) {
 		logger.info("Fetching BusLine with");
 		List<BusLineDTO> busLines = busLineService.filterBusLineRadius(spot);

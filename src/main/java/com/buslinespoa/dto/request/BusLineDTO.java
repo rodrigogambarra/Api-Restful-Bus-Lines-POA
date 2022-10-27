@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BusLineDTO {
 
-	private Long id;
+	private Long idBusLine;
 	@NotEmpty
 	private String code;
 	@NotEmpty
@@ -24,14 +24,15 @@ public class BusLineDTO {
 	private List<BusRouteResponseDTO> busRoutes;
 
 	public BusLineDTO(){}
+
 	public BusLineDTO(BusLine busLine){
-		this.id = busLine.getIdBusLine();
+		this.idBusLine = busLine.getIdBusLine();
 		this.code = busLine.getCode();
 		this.name = busLine.getName();
 		this.busRoutes = new ArrayList<>();
 	}
 	public BusLineDTO(Long id, String code, String name){
-		this.id = id;
+		this.idBusLine = id;
 		this.code = code;
 		this.name = name;
 		this.busRoutes = new ArrayList<>();
