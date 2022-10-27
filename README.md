@@ -47,7 +47,7 @@ As principais funcionalidades do projeto são:
 * Heroku (para hospedagem)
 
 ## Imagens
-<p>Não há imagens no momento</p>
+<p>Testando alguns métodos da Api:</p>
 
 ## Como usar
 <p>As funcionalidades fornecidas pela Api são disponibilizadas pelos seguintes métodos request http:</p>
@@ -60,8 +60,7 @@ As principais funcionalidades do projeto são:
 
 4. RequestMethod <i>POST</i> Url: http://localhost:8089/api/busLine/" - <b>Cria uma nova linha de ônibus e seus itinerários, conforme exemplo json:</b>
 
-Exemplo:
-{
+Exemplo: {
 
     "code": "LINHA DE ÔNIBUS 45",
     "name": "LINHA 45",
@@ -96,7 +95,9 @@ Exemplo:
 
 6. RequestMethod <i>DELETE</i> Url: http://localhost:8089/api/busLine/{id}" - <b>Exclui uma linha de ônibus e seus itinerários</b>
 
-7. RequestMethod <i>GET</i> Url: http://localhost:8089/api/filterBusLineByRadius/?km={Valor Km}&latitude={Valor Latitute}&longitude={Valor Longitude}" - <b>Retorna todas linhas de ônibus e seus itinerários próximos a uma latitude e longitude dentro de um raio em KM passado por parâmetro url</b>
+7. RequestMethod <i>GET</i> Url: http://localhost:8089/api/filterBusLineByRadius/?km={Valor Km}&latitude={Valor Latitute}&longitude={Valor Longitude}" - <b>Retorna todas linhas de ônibus e seus itinerários próximos a uma latitude e longitude dentro de um raio em KM passado por parâmetro url, exemplo: </b>
+
+http://localhost:8089/api/filterBusLineByRadius/?km=1&latitude=-30.129305&longitude=-51.201491
 
 8. RequestMethod <i>POST</i> Url: http://localhost:8089/api/filterBusLineByRadius/" - <b>Retorna todas linhas de ônibus e seus itinerários próximos a uma latitude e longitude dentro de um raio em KM, passados por json, conforme exemplo:</b>
 
@@ -122,6 +123,6 @@ Para abrir o sistema, basta o uso de um navegador de sua preferência e conexão
 ✨ Feito por Rodrigo Gambarra!!
 
 * rodrigo@gambarra.com.br
-* <a href="linkedin.com/in/rodrigo-gambarra-2a195b151" target=”_blank”>LinkedIn</a>
-* <a href="https://github.com/rodrigogambarra" target=”_blank”>GitHub</a>
+* <a href="https://www.linkedin.com/in/rodrigo-gambarra-2a195b151/" target=”_blank”>LinkedIn</a>
+* <a href="https:/github.com/rodrigogambarra" target=”_blank”>GitHub</a>
 

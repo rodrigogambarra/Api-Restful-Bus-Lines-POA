@@ -65,17 +65,17 @@ public class RestApiController {
 	@RequestMapping(value = "/busLine/{idBusLine}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateBusLine(@PathVariable("idBusLine") long idBusLine, @Valid @RequestBody BusLineDTO busLine) {
 		logger.info("Updating BusLine with idBusLine {}", idBusLine);
-		BusLineDTO currentBusLine = busLineService.findById(idBusLine);
-		if (currentBusLine == null) {
+		BusLineDTO correntBusLine = busLineService.findById(idBusLine);
+		if (correntBusLine == null) {
 			logger.error("Unable to update. BusLine with idBusLine {} not found.", idBusLine);
 			return new ResponseEntity<>(
-				new CustomErrorType("Unable to upate. BusLine with idBusLine " + idBusLine + " not found."), HttpStatus.NOT_FOUND);
+				new CustomErrorType("Unable to update. BusLine with idBusLine " + idBusLine + " not found."), HttpStatus.NOT_FOUND);
 		}
-		currentBusLine.setName(busLine.getName());
-		currentBusLine.setCode(busLine.getCode());
-		currentBusLine.setBusRoutes(busLine.getBusRoutes());
-		busLineService.updateBusLine(currentBusLine);
-		return new ResponseEntity<>(currentBusLine, HttpStatus.OK);
+		correntBusLine.setName(busLine.getName());
+		correntBusLine.setCode(busLine.getCode());
+		correntBusLine.setBusRoutes(busLine.getBusRoutes());
+		correntBusLine = busLineService.updateBusLine(correntBusLine);
+		return new ResponseEntity<>(correntBusLine, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Delete a BusLine")

@@ -5,21 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c1cc844-8d8d-49d1-9e98-7cd08cde69bd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/provatecnica/configuration/DataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/provatecnica/configuration/DataLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/provatecnica/controller/RestApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/provatecnica/controller/RestApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/provatecnica/model/BusLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/provatecnica/model/BusLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/provatecnica.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/provatecnica/configuration/DataLoader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/provatecnica/configuration/DataLoader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/provatecnica/controller/RestApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/provatecnica/controller/RestApiController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/provatecnica/model/BusLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/provatecnica/model/BusLine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/buslinespoa/controller/RestApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/buslinespoa/controller/RestApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/buslinespoa/business/BusLineBusinessTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/buslinespoa/business/BusLineBusinessTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/buslinespoa/business/controllers/BusLineControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/buslinespoa/business/controllers/BusLineControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/provatecnica/business/BusLineBusinessTests.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,12 +217,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "/home/rodrigo/IdeaProjects/SistemaTesteBus/Api-Restful-Bus-Lines-POA"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/rodrigo/IdeaProjects/Versões ApiTransportePoa/NewBusLinePoa/Api-Restful-Bus-Lines-POA&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.srm.provatecnica.configuration" />
@@ -245,16 +239,68 @@
       <recent name="$PROJECT_DIR$/src/main/java/com/srm/provatecnica/service" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="ProvaTecnica" type="Application" factoryName="Application">
+  <component name="RunManager" selected="JUnit.BuslineServiceTest">
+    <configuration name="BusLine" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="com.provatecnica.ProvaTecnicaApp" />
+      <option name="MAIN_CLASS_NAME" value="com.buslinespoa.BusLinesPoa" />
       <module name="Api-Restful-Bus-Lines-POA" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="BusLineBusinessTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Api-Restful-Bus-Lines-POA" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.buslinespoa.business.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.buslinespoa.business" />
+      <option name="MAIN_CLASS_NAME" value="com.buslinespoa.business.BusLineBusinessTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BusLineControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Api-Restful-Bus-Lines-POA" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.buslinespoa.business.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.buslinespoa.business.controllers" />
+      <option name="MAIN_CLASS_NAME" value="com.buslinespoa.business.controllers.BusLineControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BuslineServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Api-Restful-Bus-Lines-POA" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.buslinespoa.business.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.buslinespoa.business.services" />
+      <option name="MAIN_CLASS_NAME" value="com.buslinespoa.business.services.BuslineServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.BuslineServiceTest" />
+        <item itemvalue="JUnit.BusLineControllerTest" />
+        <item itemvalue="JUnit.BusLineBusinessTests" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">

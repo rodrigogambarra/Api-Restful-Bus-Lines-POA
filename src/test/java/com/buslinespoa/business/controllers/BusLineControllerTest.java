@@ -61,7 +61,7 @@ public class BusLineControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(asJsonString(busLineDTO)))
 				.andExpect(status().isCreated())
-				.andExpect(jsonPath("$.id", is(1)))
+				.andExpect(jsonPath("$.idBusLine", is(1)))
 				.andExpect(jsonPath("$.code", is("Linha teste")))
 				.andExpect(jsonPath("$.name", is("Ônibus teste")));
 	}
@@ -112,7 +112,7 @@ public class BusLineControllerTest {
 		mockMvc.perform(get(BUSLINE_API_URL_PATH + "/busLine/")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$[0].id", is(1)))
+				.andExpect(jsonPath("$[0].idBusLine", is(1)))
 				.andExpect(jsonPath("$[0].code", is("Linha teste")))
 				.andExpect(jsonPath("$[0].name", is("Ônibus teste")));
 	}
