@@ -92,8 +92,8 @@ public class RestApiController {
 		return new ResponseEntity<>(new CustomSucessType("BusLine with idBusLine "+ idBusLine + " deleted"), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Create or update a BusLine")
-	@RequestMapping(value = "/busLine", method = RequestMethod.POST)
+	@ApiOperation(value = "Create a BusLine")
+	@RequestMapping(value = "/busLine/", method = RequestMethod.POST)
 	public ResponseEntity<?> postBusLine(@Valid @RequestBody BusLineDTO newBusLine) {
 		BusLineDTO busLineDTO = null;
 		if(newBusLine.getIdBusLine() != null) {

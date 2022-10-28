@@ -57,7 +57,7 @@ public class BusLineControllerTest {
 
 		when(busLineService.updateBusLine(busLineDTO)).thenReturn(expectedBusLineDTO);
 
-		mockMvc.perform(post(BUSLINE_API_URL_PATH + "/busLine")
+		mockMvc.perform(post(BUSLINE_API_URL_PATH + "/busLine/")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(asJsonString(busLineDTO)))
 				.andExpect(status().isCreated())

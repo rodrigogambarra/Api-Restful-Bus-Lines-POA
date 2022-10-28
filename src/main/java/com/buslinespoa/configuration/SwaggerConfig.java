@@ -2,6 +2,7 @@ package com.buslinespoa.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -27,16 +28,11 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo metaInfo() {
-		ApiInfo apiInfo = new ApiInfo(
-			"Prova Tecnica API REST",
-			"API REST de Linhas de Onibus",
-			"1.0",
-			"Terms of Service",
-			new Contact("Rodrigo Gambarra", "",
-			"rodrigo@gambarra.com.br"),
-			"Apache License Version 2.0",
-			"https://www.apache.org/licesen.html", Collections.emptyList()
-		);
-		return apiInfo;
+		return new ApiInfoBuilder()
+			.title("PI REST BusLine POA")
+			.description("API REST for linhas de ônibus de Porto Alegre")
+			.version("1.0.0")
+			.contact(new Contact("Rodrigo Gambarra", "https://github.com/rodrigogambarra/Api-Restful-Bus-Lines-POA", "rodrigo@gambarra.com.br"))
+			.build();
 	}
 }
